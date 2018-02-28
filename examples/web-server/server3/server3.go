@@ -6,6 +6,8 @@ import (
 	"net/http"
 )
 
+var count int
+
 func main() {
 	http.HandleFunc("/", handler)
 	log.Fatal(http.ListenAndServe("localhost:8000", nil))
@@ -13,6 +15,9 @@ func main() {
 
 // handler ranges over the structs found in the request and prints them out accordingly
 func handler(w http.ResponseWriter, r *http.Request) {
+	// call counter increment, and add to ouput below
+	count++
+	fmt.Fprintf(w, "Number of requests recieved --> %v\n", count)
 	// we take w (ResponsWriter and format printing of the method, url, and protocol (HTTP/1 here))
 	fmt.Fprintf(w, "%s %s %s\n", r.Method, r.URL, r.Proto)
 	for k, v := range r.Header {
