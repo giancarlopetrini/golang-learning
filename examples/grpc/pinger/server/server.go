@@ -4,7 +4,7 @@ import (
 	"log"
 	"net"
 
-	"github.com/giancarlopetrini/grpcdemo/api"
+	"github.com/giancarlopetrini/golang-learning/examples/grpc/pinger/api"
 	"google.golang.org/grpc"
 )
 

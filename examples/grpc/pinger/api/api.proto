@@ -4,15 +4,21 @@ package api;
 
 service Ping {
     rpc CheckIn(GreetMessage) returns (GreetMessage) {}
-    rpc GetDate(DateMessage) returns (DateMessage) {}
+    rpc GetDate(RequestDate) returns (DateMessage) {}
 }
 
 message GreetMessage {
     string greeting = 1;
 }
 
+message RequestDate {
+    string req = 1;
+}
+
 message DateMessage {
-    string date = 1;
+    int32 day = 1;
+    int32 month = 2;
+    int32 year = 3;
 }
 
 
