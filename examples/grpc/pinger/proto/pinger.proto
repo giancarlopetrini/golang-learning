@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package pinger;
+
+service Pinger {
+    rpc CheckIn(GreetMessage) returns (GreetMessage) {}
+    rpc GetDate(DateMessage) returns (DateMessage) {}
+}
+
+message GreetMessage {
+    string greeting = 1;
+}
+
+message DateMessage {
+    string date = 1;
+}
+
+
