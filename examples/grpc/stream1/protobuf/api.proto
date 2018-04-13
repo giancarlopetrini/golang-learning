@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package api;
+
+service Message {
+    rpc Chat (stream Request) returns (stream Response) {}
+}
+
+message Request {
+    string req = 1;
+}
+
+message Response {
+    string res = 2;
+}
