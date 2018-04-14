@@ -12,10 +12,11 @@ import (
 
 type messageServer struct{}
 
+// TODO auth handlers with UUIDs, maybe that live in a db
 // TODO add random api call to list something
 // and send it back over when prompted
 func (*messageServer) Chat(stream pb.Message_ChatServer) error {
-	fmt.Println("Received New Chat Connection")
+	fmt.Println("Received New Chat Connection...")
 	for {
 		req, err := stream.Recv()
 		if err == io.EOF {
@@ -23,9 +24,10 @@ func (*messageServer) Chat(stream pb.Message_ChatServer) error {
 		} else if err != nil {
 			return err
 		}
+		fmt.Printf("Received from UUID:\t %v\n", req.Clientuuid)
 		fmt.Printf("Received: %v \n", req.Req)
 		res := &pb.Response{
-			Res: "DEMO RESPONSE",
+			Res: "DEMO RESPONSE, UUID Sent: " + req.Clientuuid,
 		}
 		if err := stream.Send(res); err != nil {
 			return err

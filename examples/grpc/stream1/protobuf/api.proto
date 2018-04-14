@@ -8,6 +8,7 @@ service Message {
 
 message Request {
     string req = 1;
+    string clientuuid = 2;
 }
 
 message Response {

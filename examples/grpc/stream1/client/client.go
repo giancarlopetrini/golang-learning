@@ -8,11 +8,16 @@ import (
 	"log"
 	"os"
 
+	"github.com/satori/go.uuid"
+
 	pb "github.com/giancarlopetrini/golang-learning/examples/grpc/stream1/protobuf"
 	"google.golang.org/grpc"
 )
 
 func main() {
+	//TODO add UUID to context or implement auth
+	clientUUID := uuid.Must(uuid.NewV4()).String()
+	fmt.Printf("Client UUID: \t %v \n", clientUUID)
 	conn, err := grpc.Dial("localhost:50051", grpc.WithInsecure())
 	if err != nil {
 		log.Fatalf("Couldn't dial gRPC Server: %s", err)
@@ -39,7 +44,7 @@ func main() {
 				fmt.Printf("Scanned in message: %s \n", txt)
 			}
 
-			if err := stream.Send(&pb.Request{Req: txt}); err != nil {
+			if err := stream.Send(&pb.Request{Req: txt, Clientuuid: clientUUID}); err != nil {
 				log.Println("Couldn't send message....", err)
 			}
 		}
