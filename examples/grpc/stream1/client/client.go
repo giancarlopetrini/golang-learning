@@ -1,10 +1,12 @@
 package main
 
 import (
+	"bufio"
 	"context"
 	"fmt"
 	"io"
 	"log"
+	"os"
 
 	pb "github.com/giancarlopetrini/golang-learning/examples/grpc/stream1/protobuf"
 	"google.golang.org/grpc"
@@ -20,6 +22,30 @@ func main() {
 	c := pb.NewMessageClient(conn)
 
 	stream, err := c.Chat(context.Background())
+
+	sendc := make(chan struct{})
+	go func() {
+		for i := 0; i < 2; i++ {
+			scanner := bufio.NewScanner(os.Stdin)
+
+			fmt.Println("Enter sting:::")
+			var txt string
+			for scanner.Scan() {
+				line := scanner.Text()
+				if len(line) == 0 {
+					break
+				}
+				txt = line
+				fmt.Printf("Scanned in message: %s \n", txt)
+			}
+
+			if err := stream.Send(&pb.Request{Req: txt}); err != nil {
+				log.Println("Couldn't send message....", err)
+			}
+		}
+		close(sendc)
+	}()
+
 	waitc := make(chan struct{})
 	go func() {
 		for {
@@ -34,13 +60,7 @@ func main() {
 			fmt.Printf("message recieved: %s \n", in.Res)
 		}
 	}()
-
-	messageCount := 10
-	for i := 0; i < messageCount; i++ {
-		if err := stream.Send(&pb.Request{Req: "SAMPLE REQUEST"}); err != nil {
-			log.Println("Couldn't send message....", err)
-		}
-	}
-
 	<-waitc
+
+	stream.CloseSend()
 }
