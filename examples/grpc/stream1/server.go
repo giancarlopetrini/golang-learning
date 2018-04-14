@@ -13,7 +13,7 @@ import (
 type messageServer struct{}
 
 func (*messageServer) Chat(stream pb.Message_ChatServer) error {
-	fmt.Println("Running Chat RPC")
+	fmt.Println("Received New Chat Connection")
 	for {
 		req, err := stream.Recv()
 		if err == io.EOF {

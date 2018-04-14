@@ -23,12 +23,12 @@ func main() {
 
 	stream, err := c.Chat(context.Background())
 
-	sendc := make(chan struct{})
+	// TODO add ranges over send, recv channels
 	go func() {
-		for i := 0; i < 2; i++ {
+		for {
 			scanner := bufio.NewScanner(os.Stdin)
 
-			fmt.Println("Enter sting:::")
+			fmt.Println("Enter chat message:::")
 			var txt string
 			for scanner.Scan() {
 				line := scanner.Text()
@@ -43,7 +43,6 @@ func main() {
 				log.Println("Couldn't send message....", err)
 			}
 		}
-		close(sendc)
 	}()
 
 	waitc := make(chan struct{})
@@ -62,5 +61,5 @@ func main() {
 	}()
 	<-waitc
 
-	stream.CloseSend()
+	fmt.Println("Last line of Code.")
 }
