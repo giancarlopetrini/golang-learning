@@ -23,7 +23,7 @@ func main() {
 
 	stream, err := c.Chat(context.Background())
 
-	// TODO add ranges over send, recv channels
+	// TODO add send, recv channels and range over them
 	go func() {
 		for {
 			scanner := bufio.NewScanner(os.Stdin)
@@ -59,7 +59,6 @@ func main() {
 			fmt.Printf("message recieved: %s \n", in.Res)
 		}
 	}()
+	// blocks code here, since do data being written to waitc
 	<-waitc
-
-	fmt.Println("Last line of Code.")
 }

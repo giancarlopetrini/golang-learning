@@ -12,6 +12,8 @@ import (
 
 type messageServer struct{}
 
+// TODO add random api call to list something
+// and send it back over when prompted
 func (*messageServer) Chat(stream pb.Message_ChatServer) error {
 	fmt.Println("Received New Chat Connection")
 	for {
