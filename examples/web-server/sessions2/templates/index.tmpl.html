@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Index - Sessions2</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    <div style="text-align: center;">
+        <h1>Index Page - sessions2</h1>
+        <br>
+        <h3>Create a User</h3>
+        {{if .}}
+        <p>{{.}}</p>
+        {{end}}
+        <form method="POST">
+            <input type="text" name="username" placeholder="test@bob.com">
+            <input type="text" name="fname" placeholder="giancarlo">
+            <input type="text" name="lname" placeholder="petrini">
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+</body>
+
+</html>
