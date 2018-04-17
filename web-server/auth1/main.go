@@ -93,7 +93,7 @@ func signup(w http.ResponseWriter, r *http.Request) {
 }
 
 func logout(w http.ResponseWriter, r *http.Request) {
-	if err := logoutUser(r); err != nil {
+	if err := logoutUser(w, r); err != nil {
 		fmt.Println(err)
 	}
 	http.Redirect(w, r, "/", http.StatusSeeOther)

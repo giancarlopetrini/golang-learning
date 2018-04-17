@@ -31,7 +31,7 @@ func getUser(c *http.Cookie) User {
 
 }
 
-func logoutUser(r *http.Request) error {
+func logoutUser(w http.ResponseWriter, r *http.Request) error {
 	c, err := r.Cookie("session")
 	fmt.Println("Cookie passed to logoutUser:	", c)
 	if err == http.ErrNoCookie {
@@ -39,7 +39,11 @@ func logoutUser(r *http.Request) error {
 	}
 	sID, _ := uuid.FromString(c.Value)
 	delete(sessionDB, sID)
-	c.MaxAge = -1
+	http.SetCookie(w, &http.Cookie{
+		Name:   "session",
+		Value:  "",
+		MaxAge: -1,
+	})
 
 	return nil
 }
