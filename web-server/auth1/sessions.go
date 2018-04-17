@@ -37,6 +37,9 @@ func logoutUser(r *http.Request) error {
 	if err == http.ErrNoCookie {
 		return errors.New("logged out - No user logged in")
 	}
+	sID, _ := uuid.FromString(c.Value)
+	delete(sessionDB, sID)
 	c.MaxAge = -1
+
 	return nil
 }
