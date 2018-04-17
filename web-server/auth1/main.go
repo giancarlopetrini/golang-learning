@@ -36,13 +36,14 @@ func main() {
 
 func index(w http.ResponseWriter, r *http.Request) {
 	if !loggedIn(r) {
+		fmt.Println("No user logged in.")
 		tpl.ExecuteTemplate(w, "index.tmpl.html", nil)
 		return
 	}
 	c, _ := r.Cookie("session")
-	user := getUser(c)
-	fmt.Printf("User on page: %v\n", user)
-	tpl.ExecuteTemplate(w, "index.tmpl.html", user)
+	data := getUser(c)
+	fmt.Println("User map:	", data)
+	tpl.ExecuteTemplate(w, "index.tmpl.html", data)
 }
 
 func signup(w http.ResponseWriter, r *http.Request) {
@@ -75,7 +76,7 @@ func signup(w http.ResponseWriter, r *http.Request) {
 		sessionDB[sID] = un
 
 		http.SetCookie(w, &http.Cookie{
-			Name:  "sessions",
+			Name:  "session",
 			Value: sID.String(),
 		})
 
@@ -83,11 +84,17 @@ func signup(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/", http.StatusSeeOther)
 	}
 	if r.Method == http.MethodGet {
+		if loggedIn(r) {
+			http.Redirect(w, r, "/", http.StatusSeeOther)
+			return
+		}
 		tpl.ExecuteTemplate(w, "signup.tmpl.html", nil)
 	}
 }
 
 func logout(w http.ResponseWriter, r *http.Request) {
-	logoutUser(w, r)
+	if err := logoutUser(r); err != nil {
+		fmt.Println(err)
+	}
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
