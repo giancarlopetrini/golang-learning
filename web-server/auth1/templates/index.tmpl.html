@@ -9,9 +9,17 @@
 <body>
     <div style="text-align: center;">
         <h1>Home Page -- login1</h1>
-        <a href="/user">User Page</a>
         <a href="/signup">Sign Up Page</a>
         <a href="/logout">Logout</a>
+        <br>
+        {{if .}}
+        <!--{{if .Message}}
+        <p>{{.Message}}</p>
+        {{end}}!-->
+        <p>{{.Username}}</p>
+        <p>{{.Fname}}</p>
+        <p>{{.Lname}}</p>
+        {{end}}
     </div>
     
 </body>
