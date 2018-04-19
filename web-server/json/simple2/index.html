@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Demo JSON</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script>
+        var codeArray = [{
+            "Code": 200,
+            "Descrip": "StatusOK"
+        }, {
+            "Code": 301,
+            "Descrip": "StatusMovedPermantenly"
+        }, {
+            "Code": 302,
+            "Descrip": "StatusFound"
+        }]
+        var newArray = JSON.stringify(codeArray)
+        document.write(newArray)
+    </script>
+</head>
+
+<body>
+    <h1>demo json.....</h1>
+</body>
+
+</html>
